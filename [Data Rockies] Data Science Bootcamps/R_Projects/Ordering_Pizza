@@ -1,0 +1,97 @@
+#install.packages("dplyr")
+library(dplyr)
+
+Piz_order <- function(){
+  print("Welcome to Nakagi pizza delivery app ^^")
+  print("What's your name")
+  cus_name <- readLines("stdin", n =1 )
+  print("What's your gender : Please type M or F")
+  cus_gen <- readLines("stdin", n =1 )
+  if (cus_gen == "M"){
+    greet_cus <- paste("Mr.",cus_name)
+  }else if (cus_gen == "F"){
+    greet_cus <- paste("Mrs.",cus_name)
+  }else {
+    print("Your input is invalid")
+    print("Please try again")
+    Piz_order()
+  }
+  print(paste("Hello ",greet_cus ))
+  print("--------------------------------------")
+  print("How can us help you sir") 
+  while (TRUE){
+    print("Please type one of these numbers below")
+    print("1 = Order pizza / 2 = Promotion / 3 = contact us")
+    cus_action <- readLines("stdin", n = 1)
+    if (cus_action == 1){
+      print(" ")
+      print("Please choose your pizza")
+      print("4 = Hawaian / 5 = Seafood / 6 = Tom Yum Kung / 7 = Pepperoni")
+      piz_type <- readLines("stdin", n = 1 )
+      piz_type2 <- case_when(piz_type == 4 ~ "Hawaian",
+                   piz_type == 5 ~ "Seafood",
+                   piz_type == 6 ~ "Tom Yum Kung",
+                   piz_type == 7 ~ "Pepperoni")
+      
+      print(" ")
+      print("What size do you prefer for your pizza")
+      print("8 = size S / 9 = size M / 10 = size L")      
+      piz_size <- readLines("stdin", n = 1 ) 
+      piz_size2 <- case_when(piz_size == 8 ~ "size S",
+                   piz_size == 9 ~ "size M",
+                   piz_size == 10 ~ "size L")      
+      piz_price<- case_when(piz_size == 8 ~ as.numeric(199),
+                   piz_size == 9 ~ as.numeric(299),
+                   piz_size == 10 ~ as.numeric(429))
+      
+      print(" ")
+      print("Please type quantity : Please type by number")
+      piz_quan <- as.numeric(readLines("stdin", n = 1 ))
+      promotion <- case_when(piz_quan <3 ~ "No promotion",
+                             piz_quan  >= 3 ~ "20% Discount",
+                             piz_quan  >= 5 ~ "40% Discount")
+      
+      total_price <- piz_price * piz_quan
+      total_price2 <- paste(piz_price * piz_quan,"Bahts") 
+      
+      net_price <- if(piz_quan >= 3){
+                      promo1 <- total_price * 0.8 #ลด 20%
+                      print(paste(promo1," Bahts"))
+                   }else if (piz_quan >= 5){
+                      promo2 <- total_price * 0.6 #ลด 40%
+                      print(paste(promo2," Bahts"))  
+                   }else {
+                      print(paste(total_price," Bahts"))
+                   }
+      
+      print("--------------------------------------")
+      print(" ")
+      print("This is your bill")
+      df <- data.frame(Type = piz_type2,
+                      Size = piz_size2,
+                      Quantity = piz_quan,
+                      Promotion = promotion, 
+                      Total_Price = net_price)
+      print(df)
+      print(" ")
+      print("Please tell us your contact infomation : (Your location and phone number)")
+      cus_cont <- readLines("stdin", n = 1 )
+      print(paste("Your contact :",cus_cont))
+      print("Thank you for ordering our pizza ^^")
+      print("Delivery process should be about 20-30 minutes")
+      break
+    }else if (cus_action == 2){
+      print("Promotion1 = Buy pizza 3 pieces or more for 20% Discount")
+      print("Promotion2 = Buy pizza 5 pieces or more for 40% Discount")
+      break
+    }else if (cus_action == 3){
+      print("Our store : BKK Ladpharo 10348")
+      print("Tel : 999-999-9999")
+      break
+    }else {
+      print("Your in put is invalid please type again")
+    }
+  }
+}
+
+Piz_order()

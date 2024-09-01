@@ -1,0 +1,87 @@
+/*In this project, I will create a simple restaurant's database */
+
+create table Orders(
+    OrderID int,
+    OrderDate date,
+    FoodID int,
+    BeverageID int,
+    StaffID int,
+    PromotionCode int,
+    Sales real,
+    primary key (OrderID),
+    foreign key (FoodID) references Food(FoodID),
+    foreign key (BeverageID) references Beverage(BeverageID),
+    foreign key (StaffID) references Staff(StaffID),
+    foreign key (PromotionCode) references Promotion(PromotionCode)
+);
+
+insert into Orders values
+(1,"2022-04-10",3,5,2,1,120),
+(2,"2022-04-10",5,4,6,2,100),
+(3,"2022-04-11",2,1,3,4,160),
+(4,"2022-04-12",1,2,5,1,135),
+(5,"2022-04-12",4,6,1,3,85),
+(6,"2022-04-10",1,3,4,2,70);
+
+create table Food(
+    FoodID int,
+    FoodLists varchar,
+    Prices real,
+    primary key (FoodID)  
+);
+
+insert into Food values
+(1,"ข้าวผัดหมู",35),
+(2,"ข้าวผัดกะเพราไก่ไข่ดาว",40),
+(3,"ข้าวหมูกระเทียมไข่ดาว",40),
+(4,"ข้าวไข่เจียวหมูสับ",30),
+(5,"ผัดซีอิ๊วหมู",35);
+
+create table Beverage(
+    BeverageID int,
+    BeverageLists varchar,
+    Prices real,
+    primary key (BeverageID)  
+);
+
+insert into Beverage values
+(1,"โค้ก",15),
+(2,"น้ำส้ม",10),
+(3,"น้ำเสาวรส",20),
+(4,"น้ำองุ่น",15),
+(5,"ชามะนาว",20),
+(6,"น้ำพันซ์",25);
+
+create table Staff(
+    StaffID int,
+    StaffLists varchar,    
+    primary key (StaffID)  
+);
+
+insert into Staff values
+(1,"Alphen"),
+(2,"Shionne"),
+(3,"Rinwell"),
+(4,"Law"),
+(5,"Kisara"),
+(6,"Dohalim");
+
+create table Promotion(
+    PromotionCode int,
+    PromotionLists varchar,    
+    primary key (PromotionCode)  
+);
+
+insert into Promotion values
+(1,"No discount"),
+(2,"Discount 5%"),
+(3,"Discount 15%"),
+(4,"Buy 2 get 1"),
+(5,"Free Drinks");
+
+.mode markdown
+.header on 
+
+select * from Orders
+  join Food
+  on Orders.FoodID = Food.FoodID;
